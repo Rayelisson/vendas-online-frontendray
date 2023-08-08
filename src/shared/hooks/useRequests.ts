@@ -1,0 +1,50 @@
+/* eslint-disable prettier/prettier */
+import axios from 'axios';
+import { useState } from 'react';
+
+import { useGlobalContext } from './useGlobalContext';
+
+export const useRequests = () => {
+  const [loading, setLoang] = useState(false);
+  const {  setNotification } = useGlobalContext()
+
+  const getRequest = async (url: string) => {
+    setLoang(true);
+    return await axios({
+      method: 'get',
+      url: url,
+    })
+      .then((result) => {
+        return result.data;
+      })
+      .catch(() => {
+        alert('Erro');
+      });
+  };
+
+  const postRequest = async (url: string, body: any) => {
+    setLoang(true);
+    const returnData = await axios({
+      method: 'post',
+      url: url,
+      data: body,
+    })
+      .then((result) => {
+        setNotification('Entrado...', 'success')
+        alert('login sucesso')
+        return result.data;
+      })
+      .catch(() => {
+        setNotification('Senha invalida', 'error')
+      });
+
+      setLoang(false)
+      return returnData
+  };
+
+  return {
+    loading,
+    getRequest,
+    postRequest,
+  };
+};
