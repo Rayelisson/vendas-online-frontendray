@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext,useState } from 'react';
+
 
 type NotificationType = 'success' | 'info' | 'warning' | 'error'
 
@@ -11,7 +12,6 @@ interface NotificationProps {
 }
 
 interface GlobalData {
-  accessToken?: string;
   notification?: NotificationProps
 }
 
@@ -37,14 +37,7 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
 };
 
 export const useGlobalContext = () => {
-        const { globalData, setGlobalData} = useContext(GlobalContext)
-
-        const setAccessToken = (accessToken: string) => {
-                setGlobalData({
-                   ...globalData,
-                   accessToken,
-                })
-        }
+    const { globalData, setGlobalData} = useContext(GlobalContext)
 
         const setNotification = (message: string, type: NotificationType, description?: string) => {
             setGlobalData({
@@ -59,8 +52,6 @@ export const useGlobalContext = () => {
 
         return {
            notification: globalData?.notification,
-           accessToken: globalData?.accessToken,
-           setAccessToken,
            setNotification,
         }
   }

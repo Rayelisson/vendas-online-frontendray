@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import Button from '../../../shared/components/buttons/button/Button';
 import Input from '../../../shared/components/inputs/input/input';
-import { useGlobalContext } from '../../../shared/hooks/useGlobalContext';
 import { useRequests } from '../../../shared/hooks/useRequests';
 import {
   BackgroundImage,
@@ -14,10 +13,9 @@ import {
 } from '../styles/loginScreen.styles';
 
 const LoginScreen = () => {
-  const { accessToken, setAccessToken } = useGlobalContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { postRequest, loading } = useRequests();
+  const { authRequest, loading } = useRequests();
 
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -27,9 +25,8 @@ const LoginScreen = () => {
     setEmail(event.target.value);
   };
 
-  const handLogin = async () => {
-    setAccessToken('fez login');
-    postRequest('http://localhost:3000/auth', {
+  const handLogin = () => {
+    authRequest({
       email: email,
       password: password,
     });
@@ -41,7 +38,7 @@ const LoginScreen = () => {
         <LimitedContainer>
           <LogoImage src="./logo1.svg" />
           <TitleLogin level={2} type="secondary">
-            LOGIN ({accessToken})
+            LOGIN
           </TitleLogin>
           <Input title="USUARÍO" margin="32px 0px 0px" onChange={handleEmail} value={email} />
           <Input
