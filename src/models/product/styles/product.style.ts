@@ -10,7 +10,7 @@ export const BoxButtons = styled.div`
 `;
 
 export const LimiteSizeButton = styled.div`
-    width: 120px;
+    width: 130px;
 `;
 
 export const LimiteSizeInput = styled.div`
