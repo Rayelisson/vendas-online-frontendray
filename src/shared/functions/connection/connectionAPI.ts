@@ -10,7 +10,7 @@ export type MethodType = 'get' | 'post' | 'put' | 'patch' | 'delete'
 
 
 export default class ConnectionAPI {
-     static async call<T>(url: string, method: MethodType, body?: unknown): Promise< T | undefined> {
+     static async call<T>(url: string, method: MethodType, body?: unknown): Promise< T> {
         const config: AxiosRequestConfig  = {
             headers: {
                 Authorization: getAuthorizationToken(),
@@ -32,7 +32,7 @@ export default class ConnectionAPI {
           }
       }
 
-    static async connect<T>(url: string, method: MethodType, body?: unknown): Promise< T | undefined> {
+    static async connect<T>(url: string, method: MethodType, body?: unknown): Promise< T> {
     return ConnectionAPI.call<T>(url, method, body).catch((error) => {
         if (error.response) {
             switch (error.response.status) {

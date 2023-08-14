@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 
-import { redirect } from 'react-router-dom';
+import {NavigateFunction, redirect } from 'react-router-dom';
 
 import { LoginRoutesEnum } from '../../../models/login/routes';
 import { UserType } from '../../../models/login/types/UserTypes';
@@ -23,15 +23,26 @@ export const getAuthorizationToken = () => getItemStorage(AUTHORIZACTION_KEY)
 export const verifyLoggedIn = async () => {
   const token = getAuthorizationToken();
   if (!token) {
-    return redirect(LoginRoutesEnum.LOGIN);
+     return redirect(LoginRoutesEnum.LOGIN)
   }
-  const user = await connectAPIGet<UserType>(URL_USER).catch(() => {
-    unsetAuthorizationToken();
+  await connectAPIGet<UserType>(URL_USER).catch(() => {
+    unsetAuthorizationToken()
+   
   });
+  const user = await connectAPIGet<UserType>(URL_USER).catch(() => {
+    unsetAuthorizationToken()
+    })
 
-  if (!user) {
-    return redirect(LoginRoutesEnum.LOGIN);
-  }
+    if(!user) {
+      return redirect(LoginRoutesEnum.LOGIN)
+    }
+ 
 
   return null;
 };
+
+export const logout = (navigate: NavigateFunction) => {
+    unsetAuthorizationToken()
+    //location.href = '/login'
+    navigate(LoginRoutesEnum.LOGIN)
+}

@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 import { useState } from 'react';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { NavigateFunction } from 'react-router-dom';
 
 import { AuthType } from '../../models/login/types/AuthType';
 import { ProductRoutesEnum } from '../../models/product/routes';
@@ -13,7 +13,6 @@ import { useGlobalContext } from './useGlobalContext';
 
 export const useRequests = () => {
   const [loading, setLoang] = useState(false);
-
   const { setNotification, setUser } = useGlobalContext();
 
   const request = async <T>(
@@ -46,13 +45,14 @@ export const useRequests = () => {
     };
 
 
-      const authRequest = async (body: unknown): Promise<void> => {
+      const authRequest = async (navigate: NavigateFunction, body: unknown): Promise<void> => {
         setLoang(true);
     
         await connectAPIPost<AuthType>(URL_AUTH, body)
           .then((result) => {
             setUser(result?.user);
             setAuthorizationToken(result?.accessToken);
+            navigate(ProductRoutesEnum.PRODUCT)
             return result;
           })
           .catch(() => {

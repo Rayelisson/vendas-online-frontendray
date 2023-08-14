@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../shared/components/buttons/button/Button';
+import SVGLogo from '../../../shared/components/icons/SVGLogo';
 import Input from '../../../shared/components/inputs/input/input';
 import { useRequests } from '../../../shared/hooks/useRequests';
 import {
@@ -8,11 +10,11 @@ import {
   ContainerLogin,
   ContainerLoginScreen,
   LimitedContainer,
-  LogoImage,
   TitleLogin,
 } from '../styles/loginScreen.styles';
 
 const LoginScreen = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { authRequest, loading } = useRequests();
@@ -26,7 +28,7 @@ const LoginScreen = () => {
   };
 
   const handLogin = () => {
-    authRequest({
+    authRequest(navigate, {
       email: email,
       password: password,
     });
@@ -36,7 +38,7 @@ const LoginScreen = () => {
     <ContainerLoginScreen>
       <ContainerLogin>
         <LimitedContainer>
-          <LogoImage src="./logo1.svg" />
+          <SVGLogo />
           <TitleLogin level={2} type="secondary">
             LOGIN
           </TitleLogin>

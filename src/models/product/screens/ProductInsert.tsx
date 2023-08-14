@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../shared/components/buttons/button/Button';
@@ -8,10 +7,7 @@ import Input from '../../../shared/components/inputs/input/input';
 import InputMoney from '../../../shared/components/inputs/inputMoney/InputMoney';
 import Select from '../../../shared/components/inputs/select/Select';
 import Screen from "../../../shared/components/screen/Screen"
-import { URL_CATEGORY } from "../../../shared/constants/urls";
-import { MethodsEnum } from '../../../shared/enums/methods.enum';
-import { useDataContext } from "../../../shared/hooks/useDataContext"
-import { useRequests } from "../../../shared/hooks/useRequests"
+import { useCategory } from '../../category/hooks/UseCategory';
 import { useInsertProduct } from '../hooks/useInsertProduct';
 import { ProductRoutesEnum } from "../routes"
 import { DisplayFlexJudtifyRight } from '../styles/display.styled';
@@ -25,17 +21,11 @@ import { ProductInsertContainer } from '../styles/productInsert.style';
 const ProductInsert = () => {
   const {product, loading, dissabledButton, onChangeInput, handleInsertProduct,  handleChangeSelect } = useInsertProduct()
 
-  const {categories, setCategories } = useDataContext()
-  const { request } = useRequests()
+  const {categories } = useCategory()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (categories.length === 0) {
-      request(URL_CATEGORY, MethodsEnum.GET, setCategories)
-     }
-  }, [])
 
- 
+
 
   const handleOnClickCancel = () => {
       navigate(ProductRoutesEnum.PRODUCT)
