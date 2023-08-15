@@ -3,7 +3,6 @@
 import { Input } from "antd"
 import { ColumnsType } from "antd/es/table"
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 import Button from "../../../shared/components/buttons/button/Button"
@@ -14,8 +13,6 @@ import { MethodsEnum } from "../../../shared/enums/methods.enum"
 import { convertNumberToMoney } from "../../../shared/functions/money"
 import { useRequests } from '../../../shared/hooks/useRequests'
 import { ProductType } from "../../../shared/types/ProductType"
-import { useAppSelector } from "../../../store/hooks"
-import { setProductsAction } from "../../../store/reducers/productReducer"
 import { useProductReducer } from "../../../store/reducers/productReducer/useProductReducer"
 import CategoryColumn from '../components/CategoryColumn';
 import TooltipImage from "../components/TooltipImage"
