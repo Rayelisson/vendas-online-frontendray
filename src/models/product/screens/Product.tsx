@@ -3,6 +3,7 @@
 import { Input } from "antd"
 import { ColumnsType } from "antd/es/table"
 import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 import Button from "../../../shared/components/buttons/button/Button"
@@ -11,13 +12,16 @@ import Table from "../../../shared/components/table/Table"
 import { URL_PRODUCT } from "../../../shared/constants/urls"
 import { MethodsEnum } from "../../../shared/enums/methods.enum"
 import { convertNumberToMoney } from "../../../shared/functions/money"
-import { useDataContext } from "../../../shared/hooks/useDataContext"
 import { useRequests } from '../../../shared/hooks/useRequests'
 import { ProductType } from "../../../shared/types/ProductType"
+import { useAppSelector } from "../../../store/hooks"
+import { setProductsAction } from "../../../store/reducers/productReducer"
+import { useProductReducer } from "../../../store/reducers/productReducer/useProductReducer"
 import CategoryColumn from '../components/CategoryColumn';
 import TooltipImage from "../components/TooltipImage"
 import { ProductRoutesEnum } from "../routes"
-import { BoxButtons, LimiteSizeButton, LimiteSizeInput } from "../styles/product.style"
+import { DisplayFlexJustifyBetWeen } from "../styles/display.styled"
+import { LimitedContainer } from "../styles/limited.styled"
 
 
 const { Search } = Input
@@ -53,7 +57,7 @@ const columns: ColumnsType<ProductType> = [
 
 
 const Product = () => {
-    const { products, setProduct } = useDataContext()
+    const { products, setProduct } = useProductReducer()
     const [productsFiltered, setProdutsFiltered] = useState<ProductType[]>([])
     const { request } = useRequests()
     const navigate = useNavigate()
@@ -90,16 +94,16 @@ const Product = () => {
                   name: 'PRODUTOS',
                 },
 ]}>
-              <BoxButtons>
-              <LimiteSizeInput>
+              <DisplayFlexJustifyBetWeen margin="0px 0px 16px 0px">
+              <LimitedContainer width={240}>
                   <Search placeholder="Buscar Produto" onSearch={onSearch} enterButton/>
-              </LimiteSizeInput>
-                <LimiteSizeButton>
+              </LimitedContainer>
+                <LimitedContainer width={120}>
                 <Button type="primary" onClick={handleOnClickInsert}>
                       Insert
                  </Button>
-                </LimiteSizeButton>
-              </BoxButtons>
+                </LimitedContainer>
+              </DisplayFlexJustifyBetWeen>
                <Table columns={columns} dataSource={productsFiltered} />
             </Screen>
           )

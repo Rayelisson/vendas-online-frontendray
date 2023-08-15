@@ -10,9 +10,8 @@ import Screen from "../../../shared/components/screen/Screen"
 import { useCategory } from '../../category/hooks/UseCategory';
 import { useInsertProduct } from '../hooks/useInsertProduct';
 import { ProductRoutesEnum } from "../routes"
-import { DisplayFlexJudtifyRight } from '../styles/display.styled';
+import { DisplayFlexJudtifyCenter, DisplayFlexJudtifyRight } from '../styles/display.styled';
 import { LimitedContainer } from '../styles/limited.styled';
-import { ProductInsertContainer } from '../styles/productInsert.style';
 
 
 
@@ -51,7 +50,7 @@ const ProductInsert = () => {
       ]}
 
    >
-    <ProductInsertContainer>
+    <DisplayFlexJudtifyCenter>
     <LimitedContainer width={400}>
       <Input onChange={(event) => onChangeInput(event, 'name')} value={product.name} margin="0px 0px 16px 0px" title='Nome' placeholder='Nome'/>
       <Input onChange={(event) => onChangeInput(event, 'image')}  value={product.image} margin="0px 0px 16px 0px" title='Url imagem'   placeholder='Url imagem'/>
@@ -81,7 +80,7 @@ const ProductInsert = () => {
       </LimitedContainer>
       </DisplayFlexJudtifyRight>
       </LimitedContainer>
-    </ProductInsertContainer>
+    </DisplayFlexJudtifyCenter>
    </Screen>
     )
 }
