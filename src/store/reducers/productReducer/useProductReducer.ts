@@ -5,21 +5,27 @@ import { useDispatch } from "react-redux"
 
 import { ProductType } from "../../../shared/types/ProductType"
 import { useAppSelector } from "../../hooks"
-import { setProductsAction } from "."
+import { setProductAction,setProductsAction } from "."
 
 
 
 export const useProductReducer = () => {
     const dispatch = useDispatch()
-    const { products } = useAppSelector((state) => state.productReducer)
+    const { products, product } = useAppSelector((state) => state.productReducer)
 
-    const setProduct = (products: ProductType[]) => {
-      dispatch(setProductsAction(products))
+    const setProducts = (currentProducts: ProductType[]) => {
+      dispatch(setProductsAction(currentProducts))
+    }
+
+    const setProduct = (currentProduct?: ProductType) => {
+      dispatch(setProductAction(currentProduct))
     }
 
     return {
         products,
-        setProduct
+        product,
+        setProduct,
+        setProducts,
     
     }
   
