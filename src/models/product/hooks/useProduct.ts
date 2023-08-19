@@ -11,6 +11,7 @@ import { useProductReducer } from "../../../store/reducers/productReducer/usePro
 import { ProductRoutesEnum } from "../routes"
 
 export const useProduct = () => {
+   const [productIdDelete, setProductIdDelete] = useState<number | undefined>()
     const { products, setProducts } = useProductReducer()
     const [productsFiltered, setProdutsFiltered] = useState<ProductType[]>([])
     const { request } = useRequests()
@@ -36,10 +37,10 @@ export const useProduct = () => {
             }
         }
 
-    const hanldleDeleteProduct = async (productId: number) => {
-      await request(URL_PRODUCT_ID.replace('{productId}', `${productId}`), MethodsEnum.DELETE)
+    const hanldleDeleteProduct = async () => {
+      await request(URL_PRODUCT_ID.replace('{productId}', `${productIdDelete}`), MethodsEnum.DELETE)
       await request<ProductType[]>(URL_PRODUCT,MethodsEnum.GET, setProducts)
-      
+      setProductIdDelete(undefined)
     }
 
     const hanldleEditProduct = async (productId: number) => {
@@ -47,12 +48,24 @@ export const useProduct = () => {
       
     }
 
+    const handleClosedModalDelete = () => {
+      setProductIdDelete(undefined)
+    }
+
+    const hanldOpenModalDelete = (productId: number) => {
+       setProductIdDelete(productId)
+     
+    }
+
     return {
         handleOnClickInsert,
         onSearch,
+        openModalDelete: !!productIdDelete,
         productsFiltered,
+        handleClosedModalDelete,
         hanldleDeleteProduct,
         hanldleEditProduct,
+        hanldOpenModalDelete,
       }
 }
 

@@ -32,7 +32,7 @@ export const useRequests = () => {
             )
         }
         if (message) {
-          setNotification('Sucesso!', 'success', message);
+          setNotification('Sucesso', 'success', message);
         }
         return result;
       })

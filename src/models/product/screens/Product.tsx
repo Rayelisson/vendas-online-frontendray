@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 
-import { Input } from "antd"
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
+import { Input, Modal } from "antd"
 import { ColumnsType } from "antd/es/table"
 import { useMemo } from "react"
 
@@ -12,7 +13,7 @@ import { ProductType } from "../../../shared/types/ProductType"
 import CategoryColumn from '../components/CategoryColumn';
 import TooltipImage from "../components/TooltipImage"
 import { useProduct } from "../hooks/useProduct"
-import { DisplayFlexJustifyBetWeen } from "../styles/display.styled"
+import { DisplayFlex, DisplayFlexJustifyBetWeen } from "../styles/display.styled"
 import { LimitedContainer } from "../styles/limited.styled"
 
 
@@ -23,7 +24,15 @@ const { Search } = Input
 
 
 const Product = () => {
-    const { handleOnClickInsert, onSearch,productsFiltered, hanldleDeleteProduct, hanldleEditProduct } = useProduct()
+    const { handleOnClickInsert, 
+            onSearch,
+            productsFiltered, 
+            hanldleDeleteProduct, 
+            hanldleEditProduct, 
+            handleClosedModalDelete,
+            openModalDelete,
+            hanldOpenModalDelete,
+          } = useProduct()
     const columns: ColumnsType<ProductType> = useMemo(() => 
       [
         {
@@ -56,10 +65,25 @@ const Product = () => {
           dataIndex: '',
           key: '',
           render: (_, product) => (
-                <>
-                 <a onClick={() => hanldleEditProduct(product.id)}>Editar</a>
-                 <a onClick={() => hanldleDeleteProduct(product.id)}>Deletar</a>
-                </>
+                 <LimitedContainer width={180}>
+                    <DisplayFlex>
+                        <Button
+                    margin="0px 16px 0px 0px"
+                    onClick={() => hanldleEditProduct(product.id)}
+                    icon={<EditOutlined />}
+                  >
+                    Editar
+                  </Button>
+                  <Button
+                    danger
+                    onClick={() => hanldOpenModalDelete(product.id)}
+                    icon={<DeleteOutlined />}
+                  >
+                    Deletar
+                  </Button>
+                    </DisplayFlex>
+                 </LimitedContainer>
+    
             
                 ),
 
@@ -81,6 +105,16 @@ const Product = () => {
                   name: 'PRODUTOS',
                 },
 ]}>
+                <Modal
+                title="Atenção"
+                open={openModalDelete }
+                onOk={hanldleDeleteProduct}
+                onCancel={handleClosedModalDelete }
+                okText="Sim"
+                cancelText="Cancelar"
+              >
+                <p>Tem certeza que deseja Deleta aeste Produto ?</p>
+              </Modal>
               <DisplayFlexJustifyBetWeen margin="0px 0px 16px 0px">
               <LimitedContainer width={240}>
                   <Search placeholder="Buscar Produto" onSearch={onSearch} enterButton/>
