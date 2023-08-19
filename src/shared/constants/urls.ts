@@ -15,6 +15,8 @@ export const URL_PRODUCT_ID = 'http://localhost:3000/product/{productId}'
 
 export const URL_CATEGORY = 'http://localhost:3000/category'
 
+export const URL_CATEGORY_ID = 'http://localhost:3000/category/{categoryId}'
+
 export const URL_ORDER_ALL = 'http://localhost:3000/order/all'
 
 export const URL_ORDER_ID = 'http://localhost:3000/order/{orderId}'

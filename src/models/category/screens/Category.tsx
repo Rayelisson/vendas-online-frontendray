@@ -18,11 +18,12 @@ const { Search } = Input
 
 const Category = () => {
   const { categories, 
-          openModalDelete,
+         openModalDeleteCategory,
           handleOnChangeSearch,
           handleOnClickCategory, 
           handleOpenModalDelete, 
           handleCloseModelDelete, 
+          handleGoToEditCategory,
           handleConfirmeDeleteCategory 
         } = useCategory()
   
@@ -56,7 +57,7 @@ const Category = () => {
                 <DisplayFlex>
                 <LimitedContainer  margin="0px 16px 0px 0px" width={90}>
                     <Button
-                    onClick={() => null}
+                    onClick={() => handleGoToEditCategory(category.id)}
                     icon={<EditOutlined />}
                   >
                     Editar
@@ -102,7 +103,7 @@ const Category = () => {
           >
                 <Modal
                 title="Atenção"
-                open={openModalDelete }
+                open={openModalDeleteCategory }
                 onOk={handleConfirmeDeleteCategory}
                 onCancel={handleCloseModelDelete }
                 okText="Sim"

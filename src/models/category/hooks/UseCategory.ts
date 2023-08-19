@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { URL_CATEGORY } from "../../../shared/constants/urls";
+import { URL_CATEGORY, URL_CATEGORY_ID } from "../../../shared/constants/urls";
 import { MethodsEnum } from "../../../shared/enums/methods.enum";
 import { useRequests } from "../../../shared/hooks/useRequests"
 import { useCategoryReducer } from '../../../store/reducers/categoryReducer/useCategoryReducer';
@@ -51,15 +51,29 @@ export const useCategory = () => {
       setCategoryDelete(undefined)
     }
 
-    const handleConfirmeDeleteCategory = () => {}
+    const handleConfirmeDeleteCategory = async () => {
+      await request(URL_CATEGORY_ID.replace('{categoryId}', `${categoryIdDelete}`),
+      MethodsEnum.DELETE,
+      undefined,
+      undefined,
+      'Categoria deeltada com sucesso!',
+      )
+      request(URL_CATEGORY, MethodsEnum.GET, setCategories)
+      setCategoryDelete(undefined)
+    }
+
+    const handleGoToEditCategory = (categoryId: number) => {
+     navigate(CategoryRoutesEnum.CATEGORY_EDIT.replace(':categoryId', `${categoryId}`))
+    }
 
     return {
        categories: categoriesFiltered,
-       openModalDelete: categoryIdDelete,
+       openModalDeleteCategory: !!categoryIdDelete,
        handleOnChangeSearch,
        handleOnClickCategory,
        handleOpenModalDelete,
        handleCloseModelDelete,
        handleConfirmeDeleteCategory,
+       handleGoToEditCategory,
     }
 }
